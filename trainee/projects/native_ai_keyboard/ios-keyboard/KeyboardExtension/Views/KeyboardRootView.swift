@@ -1,80 +1,69 @@
 import UIKit
 
-/// Vertical stack orchestration: toolbar → status → keyplane (KeyboardKit root layout zone).
+/// Vertical layout: AI toolbar (fixed top row) → status → keyplane (fills remainder).
 enum KeyboardRootViewLayout {
     struct Constraints {
         var toolbarHeight: NSLayoutConstraint?
         var statusHeight: NSLayoutConstraint?
         var previewHeight: NSLayoutConstraint?
-        var keyplaneMinHeight: NSLayoutConstraint?
     }
 
     static func install(
         on parent: UIView,
-        surfaceCover: UIView,
+        surfaceCover: UIView? = nil,
         toolbarRow: UIView,
         statusRow: UIView,
         keyContainer: UIView,
         previewOverlay: UIView,
         toolbarDesignHeight: CGFloat
     ) -> Constraints {
-        surfaceCover.translatesAutoresizingMaskIntoConstraints = false
-        surfaceCover.isUserInteractionEnabled = false
-        parent.addSubview(surfaceCover)
-        NSLayoutConstraint.activate([
-            surfaceCover.leadingAnchor.constraint(equalTo: parent.leadingAnchor),
-            surfaceCover.trailingAnchor.constraint(equalTo: parent.trailingAnchor),
-            surfaceCover.topAnchor.constraint(equalTo: parent.topAnchor),
-            surfaceCover.bottomAnchor.constraint(equalTo: parent.bottomAnchor),
-        ])
+        if let surfaceCover, surfaceCover.superview == nil {
+            surfaceCover.translatesAutoresizingMaskIntoConstraints = false
+            surfaceCover.isUserInteractionEnabled = false
+            parent.addSubview(surfaceCover)
+            NSLayoutConstraint.activate([
+                surfaceCover.leadingAnchor.constraint(equalTo: parent.leadingAnchor),
+                surfaceCover.trailingAnchor.constraint(equalTo: parent.trailingAnchor),
+                surfaceCover.topAnchor.constraint(equalTo: parent.topAnchor),
+                surfaceCover.bottomAnchor.constraint(equalTo: parent.bottomAnchor),
+            ])
+        }
 
-        let root = UIStackView()
-        root.axis = .vertical
-        root.spacing = 1
-        root.distribution = .fill
-        root.alignment = .fill
-        root.isLayoutMarginsRelativeArrangement = true
-        root.layoutMargins = UIEdgeInsets(top: 0, left: 0, bottom: 8, right: 0)
-        root.translatesAutoresizingMaskIntoConstraints = false
-        parent.addSubview(root)
-
-        NSLayoutConstraint.activate([
-            root.leadingAnchor.constraint(equalTo: parent.leadingAnchor),
-            root.trailingAnchor.constraint(equalTo: parent.trailingAnchor),
-            root.topAnchor.constraint(equalTo: parent.topAnchor),
-            root.bottomAnchor.constraint(equalTo: parent.bottomAnchor),
-        ])
-
-        let fixedVertical = UILayoutPriority.required
-        let expandVertical = UILayoutPriority(1)
-        toolbarRow.setContentHuggingPriority(.defaultHigh, for: .vertical)
-        toolbarRow.setContentCompressionResistancePriority(.defaultHigh, for: .vertical)
-        statusRow.setContentHuggingPriority(fixedVertical, for: .vertical)
-        statusRow.setContentCompressionResistancePriority(fixedVertical, for: .vertical)
-        keyContainer.setContentHuggingPriority(expandVertical, for: .vertical)
-        keyContainer.setContentCompressionResistancePriority(expandVertical, for: .vertical)
-
-        root.addArrangedSubview(toolbarRow)
-        root.addArrangedSubview(statusRow)
-        root.addArrangedSubview(keyContainer)
+        toolbarRow.translatesAutoresizingMaskIntoConstraints = false
+        statusRow.translatesAutoresizingMaskIntoConstraints = false
+        keyContainer.translatesAutoresizingMaskIntoConstraints = false
+        parent.addSubview(toolbarRow)
+        parent.addSubview(statusRow)
+        parent.addSubview(keyContainer)
 
         let toolbarH = toolbarRow.heightAnchor.constraint(equalToConstant: toolbarDesignHeight)
-        toolbarH.priority = .defaultHigh
-        toolbarH.isActive = true
+        toolbarH.priority = .required
 
         let statusH = statusRow.heightAnchor.constraint(equalToConstant: 0)
-        statusH.priority = .defaultHigh
-        statusH.isActive = true
+        statusH.priority = .required
 
-        let keyplaneMinH = keyContainer.heightAnchor.constraint(greaterThanOrEqualToConstant: 208)
-        keyplaneMinH.priority = .defaultHigh
-        keyplaneMinH.isActive = true
+        NSLayoutConstraint.activate([
+            toolbarRow.topAnchor.constraint(equalTo: parent.topAnchor),
+            toolbarRow.leadingAnchor.constraint(equalTo: parent.leadingAnchor),
+            toolbarRow.trailingAnchor.constraint(equalTo: parent.trailingAnchor),
+            toolbarH,
+
+            statusRow.topAnchor.constraint(equalTo: toolbarRow.bottomAnchor),
+            statusRow.leadingAnchor.constraint(equalTo: parent.leadingAnchor),
+            statusRow.trailingAnchor.constraint(equalTo: parent.trailingAnchor),
+            statusH,
+
+            keyContainer.topAnchor.constraint(equalTo: statusRow.bottomAnchor),
+            keyContainer.leadingAnchor.constraint(equalTo: parent.leadingAnchor),
+            keyContainer.trailingAnchor.constraint(equalTo: parent.trailingAnchor),
+            keyContainer.bottomAnchor.constraint(equalTo: parent.bottomAnchor),
+        ])
 
         previewOverlay.translatesAutoresizingMaskIntoConstraints = false
         previewOverlay.isUserInteractionEnabled = true
-        previewOverlay.layer.cornerRadius = 22
+        previewOverlay.layer.cornerRadius = 14
         previewOverlay.clipsToBounds = true
-        parent.insertSubview(previewOverlay, aboveSubview: root)
+        parent.insertSubview(previewOverlay, aboveSubview: keyContainer)
 
         let oh = previewOverlay.heightAnchor.constraint(equalToConstant: 0)
         oh.priority = .required
@@ -89,8 +78,7 @@ enum KeyboardRootViewLayout {
         return Constraints(
             toolbarHeight: toolbarH,
             statusHeight: statusH,
-            previewHeight: oh,
-            keyplaneMinHeight: keyplaneMinH
+            previewHeight: oh
         )
     }
 }

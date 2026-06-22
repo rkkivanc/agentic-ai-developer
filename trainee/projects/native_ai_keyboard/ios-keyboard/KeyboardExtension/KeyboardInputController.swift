@@ -13,7 +13,7 @@ class KeyboardInputController: UIInputViewController {
     private var didBeginAppearSetup = false
     private let placeholderSurface = UIView()
     private var accessReportTimers: [Timer] = []
-    private var didSyncViewportOnce = false
+    private var isSyncingSurface = false
     private(set) var chromeOptionsPresenter: KeyboardChromeOptionsPresenter?
 
     var actions: KeyboardActionService {
@@ -84,14 +84,16 @@ class KeyboardInputController: UIInputViewController {
             layoutView.topAnchor.constraint(equalTo: view.topAnchor),
             layoutView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
         ])
-        if let layout = layoutView as? KeyboardLayoutView {
-            installChromeOptionsPresenter(layoutView: layout)
+        if let shell = layoutView as? KeyboardShellView {
+            installChromeOptionsPresenter(layoutView: shell)
+            shell.finishDeferredBuildIfNeeded()
         }
+        syncKeyboardSurface()
         KeyboardExtensionDiagnostics.logSync("controller.installLayout.done")
         reportKeyboardAccessToAppGroup()
     }
 
-    func installChromeOptionsPresenter(layoutView: KeyboardLayoutView) {
+    func installChromeOptionsPresenter(layoutView: KeyboardShellView) {
         guard chromeOptionsPresenter == nil else { return }
         let presenter = KeyboardChromeOptionsPresenter(delegate: layoutView)
         presenter.install(on: layoutView, toolbarAnchor: layoutView.chromeToolbarAnchor)
@@ -108,9 +110,10 @@ class KeyboardInputController: UIInputViewController {
 
     override func loadView() {
         KeyboardExtensionDiagnostics.logSync("controller.loadView")
-        let inputView = UIInputView(frame: .zero, inputViewStyle: .default)
-        inputView.allowsSelfSizing = false
-        inputView.clipsToBounds = false
+        // `.keyboard` — Apple's style for custom keyboards (blur/tint siblings managed below).
+        // See: https://developer.apple.com/documentation/uikit/uiinputview/style/keyboard
+        let inputView = UIInputView(frame: .zero, inputViewStyle: .keyboard)
+        inputView.allowsSelfSizing = true
         view = inputView
     }
 
@@ -121,13 +124,14 @@ class KeyboardInputController: UIInputViewController {
         KeyboardExtensionDiagnostics.logSync("controller.viewDidLoad.end")
     }
 
-    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
-        super.traitCollectionDidChange(previousTraitCollection)
-        applyKeyboardAppearancePreference()
+    override func viewIsAppearing(_ animated: Bool) {
+        super.viewIsAppearing(animated)
+        KeyboardPresentationLayout.installHeightConstraint(on: view, isLandscape: isLandscapeKeyboardLayout)
     }
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        KeyboardPresentationLayout.refreshHeightIfNeeded(for: view, isLandscape: isLandscapeKeyboardLayout)
         KeyboardExtensionDiagnostics.logSync(
             "controller.viewWillAppear bounds=\(view.bounds.size) hasFullAccess=\(hasFullAccess)"
         )
@@ -138,14 +142,20 @@ class KeyboardInputController: UIInputViewController {
 
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
+        syncKeyboardLayoutForSystemContext()
         syncKeyboardSurface()
+        layoutContentView()?.applyStableLayoutFit()
         reportKeyboardAccessToAppGroup()
         scheduleFollowUpAccessReports()
         ExtensionFirebaseBootstrap.configureOnceIfNeeded { [weak self] in
             self?.reportKeyboardAccessToAppGroup()
         }
-        scheduleDeferredKeyboardBuild()
-        KeyboardExtensionDiagnostics.logSync("controller.viewDidAppear bounds=\(view.bounds.size)")
+        layoutContentView()?.finishDeferredBuildIfNeeded { [weak self] in
+            self?.layoutContentView()?.applyStableLayoutFit()
+            self?.syncKeyboardSurface()
+            self?.applyKeyboardAppearancePreference()
+        }
+        KeyboardExtensionDiagnostics.logSync("controller.viewDidAppear bounds=\(view.bounds.size) liquidGlass=\(KeyboardHostChromePolicy.usesLiquidGlassHostCard)")
     }
 
     override func viewWillDisappear(_ animated: Bool) {
@@ -159,13 +169,58 @@ class KeyboardInputController: UIInputViewController {
         KeyboardExtensionDiagnostics.log("controller.deinit")
     }
 
-    func syncKeyboardSurface() {
-        let surface = KeyboardLayoutView.surfaceColor(
-            isDark: traitCollection.userInterfaceStyle == .dark
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        KeyboardPresentationLayout.refreshHeightIfNeeded(for: view, isLandscape: isLandscapeKeyboardLayout)
+        syncKeyboardSurface()
+    }
+
+    override func textWillChange(_ textInput: UITextInput?) {
+        super.textWillChange(textInput)
+        syncKeyboardLayoutForSystemContext()
+    }
+
+    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
+        super.traitCollectionDidChange(previousTraitCollection)
+        applyKeyboardAppearancePreference()
+        if previousTraitCollection?.verticalSizeClass != traitCollection.verticalSizeClass
+            || previousTraitCollection?.horizontalSizeClass != traitCollection.horizontalSizeClass
+        {
+            syncKeyboardLayoutForSystemContext()
+        }
+    }
+
+    /// Apple: height + globe visibility follow the active text field and orientation.
+    func syncKeyboardLayoutForSystemContext() {
+        let context = KeyboardTextInputContext.snapshot(from: textDocumentProxy)
+        KeyboardExtensionDiagnostics.log(
+            "textContext keyboardType=\(context.keyboardType.rawValue) secure=\(context.isSecure)"
         )
-        let content = view.subviews.first { $0 is KeyboardLayoutView || $0 is KeyboardMinimalView }
+        layoutContentView()?.syncSystemKeyboardLayout(needsInputModeSwitchKey: needsInputModeSwitchKey)
+        syncKeyboardHeightToContent()
+    }
+
+    private var isLandscapeKeyboardLayout: Bool {
+        if view.bounds.width > 1, view.bounds.height > 1 {
+            return view.bounds.width > view.bounds.height
+        }
+        return traitCollection.verticalSizeClass == .compact && traitCollection.userInterfaceIdiom == .phone
+    }
+
+    func syncKeyboardSurface() {
+        guard !isSyncingSurface else { return }
+        isSyncingSurface = true
+        defer { isSyncingSurface = false }
+
+        let isDark = traitCollection.userInterfaceStyle == .dark
+        let surface = KeyboardHostChromePolicy.rootSurfaceColor(isDark: isDark)
+        let content = view.subviews.first { $0 is KeyboardShellView || $0 is KeyboardMinimalView }
         guard let content else { return }
         InputViewBackdropNeutralizer.neutralize(in: view, fillColor: surface, content: content)
+    }
+
+    func syncKeyboardHeightToContent() {
+        KeyboardPresentationLayout.refreshHeightIfNeeded(for: view, isLandscape: isLandscapeKeyboardLayout)
     }
 
     func applyKeyboardAppearancePreference() {
@@ -242,14 +297,14 @@ class KeyboardInputController: UIInputViewController {
         extensionContext?.open(url, completionHandler: nil)
     }
 
-    private func layoutContentView() -> KeyboardLayoutView? {
-        view.subviews.compactMap { $0 as? KeyboardLayoutView }.first
+    private func layoutContentView() -> KeyboardShellView? {
+        view.subviews.compactMap { $0 as? KeyboardShellView }.first
     }
 
     private func installPlaceholderSurface() {
         placeholderSurface.translatesAutoresizingMaskIntoConstraints = false
         placeholderSurface.isUserInteractionEnabled = false
-        placeholderSurface.backgroundColor = KeyboardLayoutView.surfaceColor(
+        placeholderSurface.backgroundColor = KeyboardHostChromePolicy.rootSurfaceColor(
             isDark: traitCollection.userInterfaceStyle == .dark
         )
         view.addSubview(placeholderSurface)
@@ -267,27 +322,5 @@ class KeyboardInputController: UIInputViewController {
         DispatchQueue.main.async { [weak self] in
             self?.viewWillSetupKeyboardKit()
         }
-    }
-
-    private func scheduleDeferredKeyboardBuild() {
-        DispatchQueue.main.async { [weak self] in
-            guard let self else { return }
-            self.layoutContentView()?.finishDeferredBuildIfNeeded { [weak self] in
-                guard let self else { return }
-                self.layoutContentView()?.applyStableLayoutFit()
-                self.syncViewportOnceIfNeeded()
-                self.syncKeyboardSurface()
-                self.applyKeyboardAppearancePreference()
-            }
-        }
-    }
-
-    private func syncViewportOnceIfNeeded() {
-        guard !didSyncViewportOnce else { return }
-        didSyncViewportOnce = true
-        let size = view.bounds.size
-        guard size.width > 1, size.height > 1 else { return }
-        KeyboardExtensionDiagnostics.logSync("controller.viewportSync bounds=\(size)")
-        KeyboardViewportLayout.syncInputViewFrame(view)
     }
 }

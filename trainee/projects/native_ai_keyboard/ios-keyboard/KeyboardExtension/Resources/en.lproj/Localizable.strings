@@ -1,5 +1,6 @@
 "keyboard.tap_open_app" = "Open app";
 "keyboard.key_return" = "return";
+"keyboard.key_globe" = "Next keyboard";
 "keyboard.key_abc" = "ABC";
 "keyboard.settings_button_accessibility" = "Open app settings";
 "keyboard.open_url_need_full_access" = "Couldn’t open the app. Turn on Allow Full Access for AI Keyboard in Settings.";
