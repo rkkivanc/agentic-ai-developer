@@ -9,8 +9,8 @@ final class KeyboardViewController: KeyboardInputController {
             KeyboardExtensionDiagnostics.logSync("controller.contentView=KeyboardMinimalView")
             return KeyboardMinimalView(controller: self)
         }
-        KeyboardExtensionDiagnostics.logSync("controller.contentView=KeyboardLayoutView")
-        return KeyboardLayoutView(controller: self)
+        KeyboardExtensionDiagnostics.logSync("controller.contentView=KeyboardShellView")
+        return KeyboardShellView(controller: self)
     }
 
     func clearPendingApplySnapshot() {

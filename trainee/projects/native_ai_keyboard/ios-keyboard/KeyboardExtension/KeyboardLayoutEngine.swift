@@ -16,7 +16,7 @@ enum KeyboardLayoutEngine {
         let configureExpandableRow: (UIStackView) -> Void
         let configureUniformLetterKey: (UIView) -> Void
         let appendKey: (UIView, UIStackView) -> Void
-        let onShiftKeyResolved: (UIButton) -> Void
+        let onShiftKeyResolved: (UIView) -> Void
         let log: (String) -> Void
     }
 
@@ -194,7 +194,7 @@ enum KeyboardLayoutEngine {
     private static func buildShiftMiddleRowSync(rowSpec: KeyboardLayoutRowSpec, context: Context) -> UIStackView {
         let row = makeRowStack(rowSpec: rowSpec, context: context)
         let shift = context.makeFunctionalKey("shift", context.metrics.shiftDeleteWidth)
-        if let shiftBtn = shift as? UIButton {
+        if let shiftBtn = shift as? UIView {
             context.onShiftKeyResolved(shiftBtn)
         }
         context.appendKey(shift, row)
@@ -233,6 +233,8 @@ enum KeyboardLayoutEngine {
                 key = space
             case .return:
                 key = context.makeFunctionalKey("return", context.metrics.bottomSideKeyWidth)
+            case .inputModeSwitch:
+                key = context.makeFunctionalKey("globe", context.metrics.bottomSideKeyWidth)
             default:
                 key = nil
             }
@@ -321,7 +323,7 @@ enum KeyboardLayoutEngine {
             if keyIndex == 0 {
                 let outer = makeRowStack(rowSpec: rowSpec, context: context)
                 let shift = context.makeFunctionalKey("shift", context.metrics.shiftDeleteWidth)
-                if let shiftBtn = shift as? UIButton {
+                if let shiftBtn = shift as? UIView {
                     context.onShiftKeyResolved(shiftBtn)
                 }
                 context.appendKey(shift, outer)

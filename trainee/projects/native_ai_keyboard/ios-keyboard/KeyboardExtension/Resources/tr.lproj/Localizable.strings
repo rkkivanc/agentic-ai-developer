@@ -1,5 +1,6 @@
 "keyboard.tap_open_app" = "Uygulama";
 "keyboard.key_return" = "Geç";
+"keyboard.key_globe" = "Sonraki klavye";
 "keyboard.key_abc" = "ABC";
 "keyboard.settings_button_accessibility" = "Uygulama ayarları";
 "keyboard.open_url_need_full_access" = "Uygulama açılamadı. Ayarlarda AI Keyboard için Tam Erişime İzin Ver’i açın.";

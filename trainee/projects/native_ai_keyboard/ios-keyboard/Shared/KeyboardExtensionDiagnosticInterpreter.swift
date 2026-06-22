@@ -36,8 +36,8 @@ enum KeyboardExtensionDiagnosticInterpreter {
             )
         }
 
-        if text.contains("KeyboardLayoutView phase1 begin"),
-           !text.contains("KeyboardLayoutView phase1 done"),
+        if text.contains("KeyboardShellView phase1 begin"),
+           !text.contains("KeyboardShellView phase1 done"),
            !text.contains("KeyboardMinimalView ready")
         {
             return Result(
@@ -69,7 +69,8 @@ enum KeyboardExtensionDiagnosticInterpreter {
             }
         }
 
-        let layoutReady = text.contains("KeyboardLayoutView phase1 done")
+        let layoutReady = text.contains("KeyboardShellView phase1 done")
+            || text.contains("build step: deferred done")
             || text.contains("KeyboardMinimalView ready")
         let deferredReady = text.contains("build step: deferred done") || text.contains("KeyboardMinimalView ready")
         if text.contains("viewDidAppear"), layoutReady, deferredReady {

@@ -7,7 +7,7 @@ final class KeyboardMinimalView: UIView {
     init(controller: KeyboardInputController) {
         self.controller = controller
         super.init(frame: .zero)
-        backgroundColor = KeyboardLayoutView.surfaceColor(isDark: controller.traitCollection.userInterfaceStyle == .dark)
+        backgroundColor = KeyboardShellView.surfaceColor(isDark: controller.traitCollection.userInterfaceStyle == .dark)
         KeyboardExtensionDiagnostics.logSync("KeyboardMinimalView init")
         buildUI()
         KeyboardExtensionDiagnostics.logSync("KeyboardMinimalView ready")

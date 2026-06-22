@@ -88,7 +88,7 @@ struct ContentView: View {
                 }
                 refreshFullAccessPrompt()
             }
-            .onChange(of: scenePhase) { _, phase in
+            .onChange(of: scenePhase) { phase in
                 guard phase == .active else { return }
                 AppGroupStore.shared.syncHostAppLanguageToKeyboard()
                 refreshFullAccessPrompt()

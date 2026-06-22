@@ -10,6 +10,7 @@ enum KeyboardLayoutItem: Equatable {
     case space
     case `return`
     case symbol(String)
+    case inputModeSwitch
 }
 
 enum KeyboardLayoutRowStyle: Equatable {
@@ -33,26 +34,35 @@ struct KeyboardLayoutSpec: Equatable {
     }
 
     /// Standard QWERTY letter keyplane (matches Apple layout reference).
-    static let lettersQwerty = KeyboardLayoutSpec(rows: [
-        KeyboardLayoutRowSpec(
-            label: "top",
-            style: .uniform,
-            items: letters("qwertyuiop")
-        ),
-        KeyboardLayoutRowSpec(
-            label: "middle",
-            style: .staggered(horizontalInset: 18),
-            items: letters("asdfghjkl")
-        ),
-        KeyboardLayoutRowSpec(
-            label: "shift",
-            style: .shiftMiddle,
-            items: [.shift] + letters("zxcvbnm") + [.delete]
-        ),
-        KeyboardLayoutRowSpec(
-            label: "bottom",
-            style: .bottom,
-            items: [.numbersToggle, .space, .return]
-        ),
-    ])
+    static let lettersQwerty = lettersQwerty(showInputModeSwitch: false)
+
+    static func lettersQwerty(showInputModeSwitch: Bool) -> KeyboardLayoutSpec {
+        var bottomItems: [KeyboardLayoutItem] = []
+        if showInputModeSwitch {
+            bottomItems.append(.inputModeSwitch)
+        }
+        bottomItems.append(contentsOf: [.numbersToggle, .space, .return])
+        return KeyboardLayoutSpec(rows: [
+            KeyboardLayoutRowSpec(
+                label: "top",
+                style: .uniform,
+                items: letters("qwertyuiop")
+            ),
+            KeyboardLayoutRowSpec(
+                label: "middle",
+                style: .staggered(horizontalInset: 18),
+                items: letters("asdfghjkl")
+            ),
+            KeyboardLayoutRowSpec(
+                label: "shift",
+                style: .shiftMiddle,
+                items: [.shift] + letters("zxcvbnm") + [.delete]
+            ),
+            KeyboardLayoutRowSpec(
+                label: "bottom",
+                style: .bottom,
+                items: bottomItems
+            ),
+        ])
+    }
 }
