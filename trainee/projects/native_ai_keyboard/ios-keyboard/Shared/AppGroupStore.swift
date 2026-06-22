@@ -45,6 +45,8 @@ final class AppGroupStore {
         /// Written by the keyboard extension (`hasFullAccess`); read by the host app.
         static let keyboardHasFullAccess = "keyboard_has_full_access"
         static let keyboardLastSeenAt = "keyboard_last_seen_at"
+        /// Host writes current locale stamp so the extension can refresh toolbar strings when language changes.
+        static let chromeStringsLanguageStamp = "keyboard_chrome_strings_language"
     }
 
     struct KeyboardAccessReport: Codable {
@@ -228,6 +230,15 @@ final class AppGroupStore {
         guard let d = defaults, d.object(forKey: "keyboard_ui_region") != nil else { return }
         d.removeObject(forKey: "keyboard_ui_region")
         d.synchronize()
+    }
+
+    /// Host app calls on launch / foreground so the keyboard extension reloads localized chrome when iOS language changes.
+    func syncHostAppLanguageToKeyboard() {
+        let code = keyboardChromeStringsLanguageCode
+        let previous = defaults?.string(forKey: Keys.chromeStringsLanguageStamp) ?? ""
+        guard previous != code else { return }
+        defaults?.set(code, forKey: Keys.chromeStringsLanguageStamp)
+        publishSettingsChange()
     }
 
     func isSessionValid(now: Date = .init()) -> Bool {
