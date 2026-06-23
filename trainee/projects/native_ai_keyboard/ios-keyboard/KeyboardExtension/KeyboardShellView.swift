@@ -124,6 +124,11 @@ final class KeyboardShellView: UIView {
         ai.syncFromAppGroup()
         keyplane.refreshLocalizedTitles()
         refreshAccentChrome()
+        refreshAIActionAvailability()
+    }
+
+    func refreshAIActionAvailability() {
+        ai.refreshActionAvailability()
     }
 
     func refreshAccentChrome() {

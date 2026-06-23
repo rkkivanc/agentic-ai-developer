@@ -12,7 +12,27 @@ struct KeyboardActionService {
         proxy.deleteBackward()
     }
 
-    func rewriteContext() -> (text: String, snapshot: RewriteSnapshot) {
+    func rewriteContext(fallbackText: String? = nil) -> (text: String, snapshot: RewriteSnapshot) {
+        let result = readRewriteContextFromProxy()
+        if !result.text.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty {
+            return result
+        }
+
+        let fallback = fallbackText?.trimmingCharacters(in: .whitespacesAndNewlines) ?? ""
+        guard !fallback.isEmpty else { return result }
+
+        return (
+            fallbackText ?? "",
+            RewriteSnapshot(
+                usesSelection: false,
+                utf16Before: KeyboardTextReplacement.utf16Length(fallback),
+                utf16After: 0,
+                replaceWholeDocumentPreferred: true
+            )
+        )
+    }
+
+    func readRewriteContextFromProxy() -> (text: String, snapshot: RewriteSnapshot) {
         if let input = proxy as? UITextInput,
            let selected = input.selectedTextRange,
            input.offset(from: selected.start, to: selected.end) > 0,

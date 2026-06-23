@@ -15,6 +15,7 @@ class KeyboardInputController: UIInputViewController {
     private var isSyncingSurface = false
     private(set) var chromeOptionsPresenter: KeyboardChromeOptionsPresenter?
     private let appearanceGate = KeyboardAppearanceGate()
+    private let composeTracker = KeyboardComposeTracker()
 
     var actions: KeyboardActionService {
         KeyboardActionService(proxy: textDocumentProxy)
@@ -146,6 +147,7 @@ class KeyboardInputController: UIInputViewController {
         )
         AppGroupStore.shared.purgeLegacyKeyboardUIRegionIfPresent()
         AIWritingLocale.syncFromDevice()
+        syncComposeTrackerFromProxy()
         reportKeyboardAccessToAppGroup()
     }
 
@@ -182,6 +184,12 @@ class KeyboardInputController: UIInputViewController {
     override func textWillChange(_ textInput: UITextInput?) {
         super.textWillChange(textInput)
         syncKeyboardLayoutForSystemContext()
+    }
+
+    override func textDidChange(_ textInput: UITextInput?) {
+        super.textDidChange(textInput)
+        syncComposeTrackerFromProxy()
+        notifyComposeTextChanged()
     }
 
     override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
@@ -313,14 +321,38 @@ class KeyboardInputController: UIInputViewController {
 
     func insertString(_ s: String) {
         actions.insertString(s)
+        composeTracker.noteInsertion(s)
+        notifyComposeTextChanged()
     }
 
     func deleteBackward() {
         actions.deleteBackward()
+        composeTracker.noteDeleteBackward()
+        notifyComposeTextChanged()
     }
 
     func rewriteContext() -> (text: String, snapshot: RewriteSnapshot) {
-        actions.rewriteContext()
+        let proxyRead = actions.readRewriteContextFromProxy()
+        if !proxyRead.text.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty {
+            composeTracker.reconcile(proxyText: proxyRead.text)
+            return proxyRead
+        }
+        let fallback = composeTracker.fallbackText
+        return actions.rewriteContext(fallbackText: fallback.isEmpty ? nil : fallback)
+    }
+
+    func hasRewriteText() -> Bool {
+        !rewriteContext().text.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty
+    }
+
+    func notifyComposeTextChanged() {
+        layoutContentView()?.refreshAIActionAvailability()
+    }
+
+    private func syncComposeTrackerFromProxy() {
+        composeTracker.noteProxyBecameExplicitlyEmpty(textDocumentProxy)
+        let proxyRead = actions.readRewriteContextFromProxy()
+        composeTracker.reconcile(proxyText: proxyRead.text)
     }
 
     func currentTextForRewrite() -> String {
@@ -338,16 +370,24 @@ class KeyboardInputController: UIInputViewController {
                 let end = input.endOfDocument
                 if let range = input.textRange(from: start, to: end) {
                     input.replace(range, withText: result)
+                    finishApplyRewrite(result: result)
                     return
                 }
             }
             DispatchQueue.main.async { [weak self] in
                 guard let self else { return }
                 self.actions.applyRewrite(result: result, snapshot: snapshot)
+                self.finishApplyRewrite(result: result)
             }
             return
         }
         actions.applyRewrite(result: result, snapshot: snapshot)
+        finishApplyRewrite(result: result)
+    }
+
+    private func finishApplyRewrite(result: String) {
+        composeTracker.setText(result)
+        notifyComposeTextChanged()
     }
 
     func openHostAppForSessionRefresh() {

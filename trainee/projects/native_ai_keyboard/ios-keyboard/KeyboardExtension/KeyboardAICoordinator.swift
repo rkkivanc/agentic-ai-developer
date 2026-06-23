@@ -60,6 +60,7 @@ final class KeyboardAICoordinator {
         sessionPollTimer = timer
         refreshOpenAppButton()
         syncFromAppGroup()
+        refreshActionAvailability()
     }
 
     func stopObserving() {
@@ -107,13 +108,23 @@ final class KeyboardAICoordinator {
         }
         refreshOpenAppButton()
         refreshAccents()
+        refreshActionAvailability()
         controller?.chromeOptionsPresenter?.rebuildIfVisible()
+    }
+
+    func refreshActionAvailability() {
+        let hasText = controller?.hasRewriteText() ?? false
+        for button in toolbar.actionsRow.arrangedSubviews.compactMap({ $0 as? UIButton }) {
+            button.isEnabled = hasText
+            button.alpha = hasText ? 1 : 0.42
+        }
     }
 
     private func rebuildAIActionsIfNeeded() {
         let expectedCount = 4
         if toolbar.actionsRow.arrangedSubviews.count == expectedCount {
             refreshActionTitles()
+            refreshActionAvailability()
             return
         }
         toolbar.actionsRow.arrangedSubviews.forEach { view in
@@ -121,6 +132,7 @@ final class KeyboardAICoordinator {
             view.removeFromSuperview()
         }
         buildAIActions()
+        refreshActionAvailability()
         let isDark = lastChromeIsDark ?? (toolbar.traitCollection.userInterfaceStyle == .dark)
         refreshActionButtonChrome(isDark: isDark)
     }
@@ -405,11 +417,7 @@ final class KeyboardAICoordinator {
         controller.clearPendingApplySnapshot()
         hidePreview()
 
-        guard !lockedText.isEmpty else {
-            statusRow.statusLabel.text = localize("keyboard.empty_text")
-            updateStatusVisibility()
-            return
-        }
+        guard !lockedText.isEmpty else { return }
 
         guard AppGroupStore.shared.isSessionValid() else {
             statusRow.statusLabel.text = localize("keyboard.open_host")
