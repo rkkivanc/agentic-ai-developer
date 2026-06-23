@@ -57,6 +57,7 @@
 		68DF3B1CCD1AF0DE258F1158 /* KeyboardShellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77B01465A4EAAD81CD6D7FC5 /* KeyboardShellView.swift */; };
 		6EB66BADA829414456D59790 /* KeyboardSetupStatus.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6144FEE675D45EAEC88FA42 /* KeyboardSetupStatus.swift */; };
 		70868333013E3C144B8AC4E2 /* DeviceId.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73D0A2C8937F9DF77059C180 /* DeviceId.swift */; };
+		F1A2B3C4D5E6789012345602 /* SplashView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1A2B3C4D5E6789012345601 /* SplashView.swift */; };
 		716E426CF73FCD1CA43C2A46 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E25E51E4E3487396100D50B9 /* ContentView.swift */; };
 		73C8B8169FFB8DB0426CD413 /* AppGroupStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2562C289D458EED89DBD0CF /* AppGroupStore.swift */; };
 		760BC2907B1DD9734AEFD0C6 /* KeyboardAppearancePreference.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15BAC83F8AD540D375720202 /* KeyboardAppearancePreference.swift */; };
@@ -208,6 +209,7 @@
 		D0EC8146D8A5EDF559704CFD /* AppleKeyboardMetrics.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppleKeyboardMetrics.swift; sourceTree = "<group>"; };
 		D172A50A2D0C5392EEA32E9A /* AIKeyboard.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = AIKeyboard.entitlements; sourceTree = "<group>"; };
 		D2964BB75F8561469253B4A2 /* AppGroupSettingsNotifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppGroupSettingsNotifier.swift; sourceTree = "<group>"; };
+		F1A2B3C4D5E6789012345601 /* SplashView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashView.swift; sourceTree = "<group>"; };
 		E25E51E4E3487396100D50B9 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		E32AD50689F3F282C098992F /* AppConfig.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppConfig.swift; sourceTree = "<group>"; };
 		E4165C24EAB18CBEC8A94CDD /* KeyboardExtensionDiagnostics.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyboardExtensionDiagnostics.swift; sourceTree = "<group>"; };
@@ -342,6 +344,7 @@
 				99933DB47AB7F595CC558A61 /* Info.plist */,
 				778D9755EBCD6718E62C0109 /* KeyboardAccessMonitor.swift */,
 				7601CBA46BCC2BA08D7ADC07 /* KeyboardHostEnvironment.swift */,
+				F1A2B3C4D5E6789012345601 /* SplashView.swift */,
 				540540A13256B109A8814536 /* Resources */,
 			);
 			path = AIKeyboard;
@@ -567,6 +570,7 @@
 				18FDF29F70A97294D7ECA9CD /* AppGroupSettingsNotifier.swift in Sources */,
 				FB4A551D32975FB84AFF673F /* AppGroupStore.swift in Sources */,
 				716E426CF73FCD1CA43C2A46 /* ContentView.swift in Sources */,
+				F1A2B3C4D5E6789012345602 /* SplashView.swift in Sources */,
 				D914ED6B62266E5DD27B7CDC /* ConversationStyle.swift in Sources */,
 				4EAE5152A897917428719AD6 /* DeviceId.swift in Sources */,
 				85AB12F45F26C840CB9D33C4 /* FeedbackReporter.swift in Sources */,
