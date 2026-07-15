@@ -1,24 +1,26 @@
-### 🚀 Go Developer Roadmap: Day 1 to Day 100 (Foundational Skills to Expert Mastery)
+### 🚀 Go Developer Roadmap: Day 1 to Day 100 (Foundational Skills to Professional Competence)
 
 | Day | Focus Area | Content Details | Goal (From Foundation to Professional) |
 | :---: | :--- | :--- | :--- |
-| **1-5** | **Go Fundamentals** | Install Go toolchain, modules, packages, variables, types, control flow, functions, basic I/O. | Write idiomatic Go programs and navigate the module/package model. |
-| **6-10** | **Structs, Methods & Interfaces** | Structs, methods, pointers, interfaces, composition over inheritance, packages and visibility. | Model domain logic with types, methods, and interfaces. |
-| **11-15** | **Collections, Errors & I/O** | Slices, maps, strings, error handling patterns, file I/O, encoding basics. | Handle data and failures the Go way. |
-| **16-20** | **Concurrency Basics** | Goroutines, channels, select, WaitGroup, Mutex, race detector. | Write safe concurrent programs. |
-| **21-25** | **Testing & Tooling** | Unit tests, table-driven tests, benchmarks, fuzzing, go tool, linters. | Ship reliable, tested Go code. |
-| **26-30** | **HTTP & REST APIs** | net/http, handlers, routing, middleware, JSON APIs, graceful shutdown. | Build production-ready HTTP services. |
-| **31-35** | **Context, Config & Validation** | context package, config loading, input validation, structured logging. | Build configurable, observable APIs. |
-| **36-40** | **Databases** | database/sql, PostgreSQL, migrations, transactions, repositories. | Persist data safely and cleanly. |
-| **41-45** | **Web Frameworks & API Design** | chi/echo/gin, OpenAPI, rate limiting, versioning, pagination. | Design professional HTTP APIs. |
-| **46-50** | **Auth & Security** | JWT, sessions, password hashing, RBAC, HTTPS, secret management. | Secure services end to end. |
-| **51-55** | **Architecture & Patterns** | Clean Architecture, wiring, design patterns in Go, project layout. | Structure larger Go systems. |
-| **56-60** | **gRPC, Protobufs & Capstone** | Protocol Buffers, gRPC, interceptors, mid-path capstone service. | Expose typed RPC APIs and consolidate skills. |
-| **61-65** | **Advanced Concurrency** | Pipelines, worker pools, errgroup, cancellations, leak detection. | Design robust concurrent systems. |
-| **66-70** | **Observability & Resilience** | Metrics, tracing, health checks, retries, circuit breakers, timeouts. | Operate reliable services. |
-| **71-75** | **Containers & Deployment** | Docker, multi-stage builds, Compose, CI/CD, Kubernetes basics for Go. | Deploy Go services professionally. |
-| **76-80** | **Messaging & Caching** | Redis, message brokers, outbox pattern, background jobs. | Build event-driven and cached systems. |
-| **81-85** | **Advanced Networking** | WebSockets, SSE, TLS, HTTP/2, service-to-service patterns. | Handle real-time and advanced networking. |
-| **86-90** | **Performance & Optimization** | pprof, memory profiling, allocation reduction, load testing. | Measure and optimize Go services. |
-| **91-95** | **Team Practices & Quality** | Code review, module versioning, docs, ADR, mentoring habits. | Work like a professional Go team. |
-| **96-100** | **Final Mastery** | System design, advanced problem solving, career prep, ultimate capstone. | Demonstrate expert-level Go engineering. |
+| **1-5** | **Go Fundamentals** | Install Go toolchain, variables, types, control flow, functions, packages, and pointers. | Solidify the foundation of the Go language. |
+| **6-10** | **Structs, Methods & Interfaces** | Structs, methods, receivers, interfaces, embedding, and composition. | Model domain logic with types, methods, and interfaces. |
+| **11-15** | **Errors, Collections & I/O** | Error handling, slices, maps, file I/O, and JSON encoding. | Handle data and failures the idiomatic Go way. |
+| **16-20** | **Concurrency Basics** | Goroutines, channels, select, sync primitives, and race awareness. | Write safe concurrent programs. |
+| **21-25** | **Testing Fundamentals** | Unit tests, table-driven tests, benchmarks, httptest, and test helpers. | Ship reliable, tested Go code. |
+| **26-30** | **HTTP Basics & Handlers** | net/http, routing, request/response handling, and middleware patterns. | Build foundational HTTP services. |
+| **31-35** | **First REST API Project (MVP)** | Project setup, CRUD endpoints, in-memory storage, validation, and polish. | Complete the first Minimum Viable Product (MVP). |
+| **36-40** | **Context, Config & Middleware** | context.Context, environment config, middleware chains, graceful shutdown. | Build configurable, production-minded HTTP services. |
+| **41-45** | **Databases (I)** | database/sql, migrations, queries, prepared statements, and transactions. | Persist data safely with relational databases. |
+| **46-50** | **Databases (II) & Repositories** | Repository pattern, query organization, DB testing, and connection pooling. | Abstract and test the data layer professionally. |
+| **51-55** | **Auth & Security** | Authentication, JWT, authorization, RBAC, and security best practices. | Secure services end to end. |
+| **56-60** | **Project Layout & Architecture** | Standard layout, clean architecture, dependency injection, and domain services. | Structure larger Go systems for maintainability. |
+| **61-65** | **gRPC & Protocol Buffers** | Protobuf definitions, gRPC services, clients, interceptors, and metadata. | Expose typed RPC APIs alongside HTTP. |
+| **66-70** | **Advanced Testing & Quality** | Integration tests, test fixtures, golangci-lint, coverage, and quality gates. | Ensure code quality and prevent regressions. |
+| **71-75** | **Observability & Resilience** | Structured logging, metrics, tracing, retries, circuit breakers, and timeouts. | Operate reliable services in production. |
+| **76-80** | **Containers & CI/CD** | Docker, multi-stage builds, GitHub Actions, and Go CI pipelines. | Deploy Go services with professional workflows. |
+| **81-85** | **Caching & Messaging** | Redis caching, message queues, event-driven patterns, and async workflows. | Build event-driven and cached systems. |
+| **86-90** | **Performance** | pprof profiling, memory tuning, concurrency tuning, and DB/HTTP optimization. | Measure and optimize Go services. |
+| **91-95** | **Team Practices & Tooling** | Code review, documentation, Makefile DX, release versioning, and team habits. | Work like a professional Go engineering team. |
+| **96-100** | **Capstone & Professional Delivery** | Capstone planning, hardening, deployment, CI/CD, and final review. | Demonstrate professional Go engineering competence. |
+
+---
