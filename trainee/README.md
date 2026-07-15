@@ -20,7 +20,7 @@ By following our learning paths, you will gain:
 The program is designed to be self-paced. You will follow a series of daily guides to build your knowledge step-by-step.
 
 1.  **Choose Your Path:** Start by looking at the [Learning Paths](./LEARNING_PATHS.md) to decide which technology track you want to pursue.
-2.  **Navigate to Your Track:** Go to the corresponding directory inside the `/days/` folder (e.g., `/days/nextjs/`, `/days/go/`, or `/days/typescript/`).
+2.  **Navigate to Your Track:** Go to the corresponding directory inside the `/days/` folder (e.g., `/days/nextjs/`, `/days/oop/`, or `/days/sdlc/`).
 3.  **Start with Day 1:** Open the `1.md` file. Read the tasks, explanations, and new vocabulary for the day.
 4.  **Complete the Exercises:** The daily guides contain tasks and prompts. While this repository is documentation-focused, we encourage you to perform these tasks locally on your own machine. For example, if a task is "Create a new Next.js project," you should run the commands and build the project on your computer.
 5.  **Track Your Progress:** We recommend you maintain your own public fork of this repository. As you complete the daily exercises, commit your notes or related code to your fork. This creates a public record of your progress and learning.

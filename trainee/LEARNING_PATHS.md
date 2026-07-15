@@ -18,6 +18,9 @@ Each path is designed as a series of daily tasks to guide you from foundational 
 *   **TypeScript Mastery:** Build deep TypeScript skill—from core types and generics to advanced type-level programming, validation boundaries, tooling, and library design.
     *   **Roadmap:** [`/days/typescript/typescript_roadmap.md`](../days/typescript/typescript_roadmap.md)
 
+*   **API Development with GraphQL:** Learn schema-first APIs—from SDL and resolvers to auth, clients, subscriptions, DataLoader, federation, and production delivery.
+    *   **Roadmap:** [`/days/graphql/graphql_roadmap.md`](../days/graphql/graphql_roadmap.md)
+
 *   **AI Agent Development:** Dive into the exciting world of AI and learn to build autonomous agents.
     *   **Roadmap:** [`/days/ai-agents/ai-agents_roadmap.md`](../days/ai-agents/ai-agents_roadmap.md)
 
@@ -30,6 +33,12 @@ Each path is designed as a series of daily tasks to guide you from foundational 
 ## Foundational Skills
 
 We also have shorter modules on foundational skills that are essential for any developer:
+
+*   **Object-Oriented Programming (OOP):**
+    *   **Roadmap:** [`/days/oop/oop_roadmap.md`](../days/oop/oop_roadmap.md)
+
+*   **Software Development Life Cycle (SDLC):**
+    *   **Roadmap:** [`/days/sdlc/sdlc_roadmap.md`](../days/sdlc/sdlc_roadmap.md)
 
 *   **Version Control with Git:**
     *   **Roadmap:** [`/days/git/git_roadmap.md`](../days/git/git_roadmap.md)

@@ -21,6 +21,9 @@ Quick overview of the available tracks. Open a roadmap for the full curriculum a
 | Next.js | 100 days | ![TypeScript](https://img.shields.io/badge/TypeScript-3178C6?logo=typescript&logoColor=white) ![Next.js](https://img.shields.io/badge/Next.js-000000?logo=nextdotjs&logoColor=white) | [`/days/nextjs/nextjs_roadmap.md`](./days/nextjs/nextjs_roadmap.md) |
 | Go | 100 days | ![Go](https://img.shields.io/badge/Go-00ADD8?logo=go&logoColor=white) | [`/days/go/go_roadmap.md`](./days/go/go_roadmap.md) |
 | TypeScript | 100 days | ![TypeScript](https://img.shields.io/badge/TypeScript-3178C6?logo=typescript&logoColor=white) | [`/days/typescript/typescript_roadmap.md`](./days/typescript/typescript_roadmap.md) |
+| GraphQL | 100 days | ![GraphQL](https://img.shields.io/badge/GraphQL-E10098?logo=graphql&logoColor=white) | [`/days/graphql/graphql_roadmap.md`](./days/graphql/graphql_roadmap.md) |
+| OOP | 20 days | ![OOP](https://img.shields.io/badge/OOP-2C3E50?logo=codio&logoColor=white) | [`/days/oop/oop_roadmap.md`](./days/oop/oop_roadmap.md) |
+| SDLC | 16 days | ![SDLC](https://img.shields.io/badge/SDLC-0A66C2) | [`/days/sdlc/sdlc_roadmap.md`](./days/sdlc/sdlc_roadmap.md) |
 | Git | 16 days | ![Git](https://img.shields.io/badge/Git-F05032?logo=git&logoColor=white) | [`/days/git/git_roadmap.md`](./days/git/git_roadmap.md) |
 | AI Agents | 100 days | ![Python](https://img.shields.io/badge/Python-3776AB?logo=python&logoColor=white) | [`/days/ai-agents/ai-agents_roadmap.md`](./days/ai-agents/ai-agents_roadmap.md) |
 
@@ -55,7 +58,7 @@ This program is guided by our core values.
 
 - [`/interns/`](./interns/): Formal internship resources, onboarding templates, and workflow standards
 - [`/trainee/`](./trainee/): Open Trainee program (MasterFabric Academy) guides and projects
-- [`/days/`](./days/): Track roadmaps (Flutter, Expo, DevOps, NestJS, Next.js, Go, TypeScript, Git, AI Agents)
+- [`/days/`](./days/): Track roadmaps (Flutter, Expo, DevOps, NestJS, Next.js, Go, TypeScript, GraphQL, OOP, SDLC, Git, AI Agents)
 
 ## Diagrams (Mermaid)
 
@@ -84,6 +87,9 @@ flowchart TB
   D --> NX[nextjs/nextjs_roadmap.md]
   D --> GO[go/go_roadmap.md]
   D --> TS[typescript/typescript_roadmap.md]
+  D --> GQL[graphql/graphql_roadmap.md]
+  D --> OOP[oop/oop_roadmap.md]
+  D --> SDLC[sdlc/sdlc_roadmap.md]
   D --> G[git/git_roadmap.md]
   D --> A[ai-agents/ai-agents_roadmap.md]
 ```
