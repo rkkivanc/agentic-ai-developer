@@ -1,24 +1,26 @@
-### 🚀 TypeScript Developer Roadmap: Day 1 to Day 100 (Foundational Skills to Expert Mastery)
+### 🚀 TypeScript Developer Roadmap: Day 1 to Day 100 (Foundational Skills to Professional Competence)
 
 | Day | Focus Area | Content Details | Goal (From Foundation to Professional) |
 | :---: | :--- | :--- | :--- |
-| **1-5** | **TypeScript Fundamentals** | Install toolchain, `tsc`/`ts-node`, primitive types, type annotations, inference, functions, `strict` basics. | Write typed TypeScript confidently and compile it to JavaScript. |
-| **6-10** | **Objects, Arrays & Unions** | Object types, arrays, tuples, enums, unions, intersections, literal types, `readonly`. | Model real data shapes with precise composite types. |
-| **11-15** | **Interfaces & Type Aliases** | Interfaces vs types, extending, declaration merging, index signatures, structural typing. | Design reusable type contracts for APIs and modules. |
-| **16-20** | **Classes & OOP in TS** | Classes, access modifiers, `implements`, inheritance, abstract classes, parameter properties. | Use class-based designs where they fit TypeScript's model. |
-| **21-25** | **Generics** | Generic functions/classes, constraints, `keyof`, default type params, practical generic utilities. | Write reusable, type-safe abstractions. |
-| **26-30** | **Narrowing & Control Flow** | Type guards, `in`/`typeof`/`instanceof`, discriminated unions, `asserts`, `unknown`/`never`. | Eliminate unsafe casts with precise control-flow typing. |
-| **31-35** | **Utility & Built-in Helpers** | `Partial`, `Pick`, `Omit`, `Record`, `Required`, `Readonly`, `ReturnType`, `Parameters`. | Compose existing types instead of rewriting them. |
-| **36-40** | **Advanced Type System** | Conditional types, `infer`, mapped types, template literal types, recursive types. | Build type-level logic for libraries and DSLs. |
-| **41-45** | **Modules & Declarations** | ES modules, ambient declarations, `.d.ts`, `@types`, module augmentation. | Integrate JS libraries and publish typed surfaces. |
-| **46-50** | **Tooling & Project Setup** | `tsconfig` deep dive, project references, path aliases, bundlers, ESM/CJS. | Configure professional TypeScript projects correctly. |
-| **51-55** | **Strictness, Lint & DX** | Strict flags, ESLint + typescript-eslint, Prettier, `noUncheckedIndexedAccess`. | Ship maintainable code with strong guardrails. |
-| **56-60** | **Testing Types & Runtime** | Vitest/Jest, mocking, type tests, mid-path typed library capstone. | Prove types and behavior with automated tests. |
-| **61-65** | **Async & Error Modeling** | Promise types, async/await, `Result` patterns, typed errors, abort signals. | Model asynchronous and failure flows safely. |
-| **66-70** | **DOM, Node & Runtime Libs** | `lib.dom`, event typing, Node.js types, isomorphic patterns. | Type frontend and backend runtimes correctly. |
-| **71-75** | **Validation & Boundary Types** | Zod/Valibot, branded types, opaque IDs, DTO mapping, parse-don't-validate. | Secure trust boundaries between runtime and types. |
-| **76-80** | **Patterns & Architecture** | Repository/service patterns, DI-lite, clean module boundaries. | Structure larger TypeScript codebases professionally. |
-| **81-85** | **Library & API Design** | Public API design, overloads, variance, dual package hazard, semver for types. | Design durable typed libraries and SDKs. |
-| **86-90** | **Performance & Modern Features** | `satisfies`, `const` assertions, excess property checks, incremental builds, type perf. | Write precise, fast-to-check modern TypeScript. |
-| **91-95** | **Team Practices & Quality** | Code review for types, monorepos, docs, ADRs, JS→TS migration. | Work like a professional TypeScript team. |
-| **96-100** | **Final Mastery** | System design with types, advanced problem solving, career prep, ultimate typed capstone. | Demonstrate expert-level TypeScript engineering. |
+| **1-5** | **TypeScript Fundamentals** | Toolchain setup, `tsc`, primitive types, annotations, inference, functions, `strict` basics. | Write typed TypeScript confidently and compile it to JavaScript. |
+| **6-10** | **Objects, Unions & Narrowing** | Object types, arrays, tuples, unions, intersections, literals, enums, narrowing guards. | Model real data shapes and eliminate unsafe assumptions. |
+| **11-15** | **Interfaces, Types & Classes** | Interfaces vs types, extending, `implements`, classes, access modifiers, structural typing. | Design reusable type contracts and class-based modules. |
+| **16-20** | **Generics** | Generic functions/classes, constraints, `keyof`, default type params, reusable abstractions. | Write type-safe, reusable code that works across many shapes. |
+| **21-25** | **Advanced Types (I)** | `Partial`, `Pick`, `Omit`, `Record`, `Required`, `ReturnType`, `Parameters`, mapped basics. | Compose existing types instead of duplicating definitions. |
+| **26-30** | **Modules, Tooling & tsconfig** | ES modules, `tsconfig` deep dive, path aliases, project references, bundlers, ESM/CJS. | Configure professional TypeScript projects correctly. |
+| **31-35** | **First Typed Project** | MVP typed library or CLI: planning, API surface, implementation, docs, review. | Complete your first Minimum Viable Product with TypeScript. |
+| **36-40** | **Async, Promises & Errors** | Promise types, `async`/`await`, typed errors, `Result` patterns, `AbortController`. | Model asynchronous and failure flows safely. |
+| **41-45** | **DOM & Browser TypeScript** | `lib.dom`, event typing, forms, `fetch`, typed browser APIs. | Type frontend code and browser interactions correctly. |
+| **46-50** | **Node.js TypeScript** | Node setup, `fs`/`path`, HTTP servers, env typing, structured Node projects. | Build typed backend scripts and services in Node.js. |
+| **51-55** | **Validation & Boundaries (Zod)** | Schema design, parsing, branded types, DTO mapping, parse-don't-validate. | Secure trust boundaries between runtime data and types. |
+| **56-60** | **Testing (runtime + type tests)** | Vitest/Jest, mocking, `expect-type`, integration tests, test organization. | Prove types and behavior with automated tests. |
+| **61-65** | **Advanced Types (II)** | Conditional types, `infer`, template literal types, recursive types, type-level logic. | Build advanced type-level abstractions for libraries. |
+| **66-70** | **Architecture & Patterns** | Repository/service patterns, DI-lite, module boundaries, error boundaries. | Structure larger TypeScript codebases professionally. |
+| **71-75** | **Library & API Design** | Public API design, overloads, variance, publishing, semver for types. | Design durable typed libraries and SDKs. |
+| **76-80** | **Strictness, Lint & CI** | Strict flags, ESLint + typescript-eslint, Prettier, CI pipelines. | Ship maintainable code with strong guardrails. |
+| **81-85** | **Full-stack Contracts & Shared Types** | Shared packages, contract-first APIs, OpenAPI codegen, monorepo types. | Keep frontend and backend types in sync at scale. |
+| **86-90** | **Performance & Modern TS Features** | `satisfies`, `const` assertions, incremental builds, type-check performance. | Write precise, fast-to-check modern TypeScript. |
+| **91-95** | **Team Practices & Migration** | Type-focused code review, JS→TS migration, monorepos, ADRs, documentation. | Work like a professional TypeScript team. |
+| **96-100** | **Capstone & Professional Delivery** | Capstone project, tests, CI/CD, optimization, reflection, portfolio delivery. | Demonstrate expert-level TypeScript engineering. |
+
+---
