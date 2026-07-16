@@ -61,6 +61,87 @@ Quick overview of the available tracks. Open a roadmap for the full curriculum a
 - **Projects**
   - Trainee projects root: [`/trainee/projects/`](./trainee/projects/)
   - Example Next.js project: **FinderDev** → [`/trainee/projects/finder_dev/`](./trainee/projects/finder_dev/)
+- **MCP (interactive learning)**
+  - Academy MCP: [`/mcp/README.md`](./mcp/README.md)
+  - English chat examples: [`/mcp/EXAMPLES.md`](./mcp/EXAMPLES.md)
+
+---
+
+<p align="center">
+  <a href="./mcp/README.md">
+    <img src="./mcp/assets/masterfabric-academy-logo.png" alt="MasterFabric Academy" width="88" />
+  </a>
+  <br /><br />
+  <strong>MCP Interactive Learning</strong><br />
+  Flow &amp; Project Planning
+</p>
+
+<p align="center">
+  <a href="./mcp/README.md">
+    <img src="./mcp/assets/mcp-interactive-learning-banner.png" alt="MCP Interactive Learning — Flow & Project Planning" width="100%" />
+  </a>
+</p>
+
+> [!IMPORTANT]
+> **MCP interactive learning & project planning**  
+> Prefer the [`masterfabric-academy`](./mcp/README.md) MCP for day-by-day guidance and delivery planning. Do not improvise a parallel syllabus — teach from official `days/` lessons, keep the mentor persona stack, and plan projects against roadmap phases.  
+> Quick start: [mcp/EXAMPLES.md](./mcp/EXAMPLES.md) · Setup: [mcp/README.md](./mcp/README.md)
+
+### Prompt the MCP — Interactive learning flow
+
+Paste into Cursor (with MCP enabled):
+
+```text
+Use masterfabric-academy MCP.
+Call start_learning_session with track=go, day=1,
+learner_goal="Interactive learning with instructor persona".
+Teach Today's Tasks only from the returned day lesson.
+```
+
+| Step | What to ask the agent | Tool |
+| ---: | --- | --- |
+| 1 | Start my track from Day 1 | `start_learning_session` |
+| 2 | Stay on today's official tasks | `get_day_lesson` |
+| 3 | Close the day and plan tomorrow | `guide_next_steps` |
+
+More copy-paste chats → **[mcp/EXAMPLES.md](./mcp/EXAMPLES.md)**
+
+### Prompt the MCP — Project planning
+
+Use the same mentor stack to turn a phase into a small delivery plan:
+
+```text
+Use masterfabric-academy MCP.
+1) get_roadmap track=go parsed=true
+2) I am on day 31 — plan a 5-day MVP project aligned to that phase
+3) Keep security + high-traffic habits in the plan
+4) End with guide_next_steps for my current day
+```
+
+| Focus | Prompt cue | Docs |
+| --- | --- | --- |
+| Phase goals | “Show phases, then plan this block” | [Go roadmap](./days/go/go_roadmap.md) |
+| Capstone / demo | “Hardening + delivery checklist” | [EXAMPLES → C](./mcp/EXAMPLES.md#c--roadmap--phase-planning) |
+| Trainee build | “Map days to a project in trainee/projects” | [trainee/projects](./trainee/projects/) |
+
+### Prompt the MCP — Mentor personas
+
+```text
+Use masterfabric-academy MCP.
+Load get_mentor_persona persona=all, then get_academy_skill.
+Teach me as lead instructor + staff engineer for secure, high-traffic code.
+```
+
+| Persona | Use when |
+| --- | --- |
+| `lead-instructor` | Day-by-day teaching |
+| `staff-engineer` | Architecture & production quality |
+| `security-coach` | Auth, input validation, safe defaults |
+| `delivery-manager` | Cadence, DoD, phase milestones |
+
+Full persona + skill walkthrough → **[EXAMPLES → D](./mcp/EXAMPLES.md#d--load-personas--skill-then-teach)**
+
+---
 
 ## Program core objectives
 
@@ -80,6 +161,7 @@ This program is guided by our core values.
 - [`/interns/`](./interns/): Formal internship resources, onboarding templates, and workflow standards
 - [`/trainee/`](./trainee/): Open Trainee program (MasterFabric Academy) guides and projects
 - [`/days/`](./days/): Track roadmaps (Flutter, Expo, DevOps, NestJS, Next.js, Go, TypeScript, GraphQL, OOP, SDLC, Git, AI Agents)
+- [`/mcp/`](./mcp/): MasterFabric Academy MCP — interactive learning flow, mentor personas, and project planning
 
 ## Diagrams (Mermaid)
 
@@ -90,6 +172,7 @@ flowchart TB
   R[Repository Root] --> I[interns/]
   R --> T[trainee/]
   R --> D[days/]
+  R --> M[mcp/]
 
   I --> I1[approved_intern+template.md]
   I --> I2[intern_checklist.md]
@@ -100,6 +183,9 @@ flowchart TB
   T --> T3[LEARNING_PATHS.md]
   T --> TP[projects/]
   TP --> FD[finder_dev/]
+
+  M --> M1[README.md + EXAMPLES.md]
+  M --> M2[mentor personas + day skill]
 
   D --> F[flutter/flutter_roadmap.md]
   D --> E[expo/expo_roadmap.md]

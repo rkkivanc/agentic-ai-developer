@@ -1,5 +1,19 @@
 # masterfabric-academy MCP
 
+<p align="center">
+  <img src="./assets/masterfabric-academy-logo.png" alt="MasterFabric Academy" width="88" />
+  <br /><br />
+  <strong>MCP Interactive Learning</strong><br />
+  Flow &amp; Project Planning
+</p>
+
+<p align="center">
+  <img src="./assets/mcp-interactive-learning-banner.png" alt="MCP Interactive Learning — Flow & Project Planning" width="100%" />
+</p>
+
+> [!IMPORTANT]
+> **Interactive learning & project planning** — Use this MCP to drive day-by-day teaching and phase-aligned project plans. Prefer official `days/` lessons over improvising a syllabus. Start with [EXAMPLES.md](./EXAMPLES.md).
+
 Local Model Context Protocol server for the [MasterFabric 100-Day](../README.md) education repo.
 
 Agents connect here to teach as an **instructor / staff engineer** stack and walk learners through official day-by-day curricula under `days/`.
@@ -127,6 +141,9 @@ See the full English walkthrough: **[EXAMPLES.md → Example D](./EXAMPLES.md#d-
 mcp/
   README.md              # This file
   EXAMPLES.md            # English chat examples & smoke tests
+  assets/
+    masterfabric-academy-logo.png
+    mcp-interactive-learning-banner.png
   mcp.ts                 # MCP server entry
   lib/
     curriculum.ts        # Track/day/roadmap readers
